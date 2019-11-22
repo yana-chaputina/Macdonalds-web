@@ -6,15 +6,15 @@
 
     <groupId>ru.rosbank.javaschool</groupId>
     <artifactId>multimodule</artifactId>
-    <version>1.0</version>
+    <version>4.0</version>
     <packaging>pom</packaging>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <sql-template.version>1.0</sql-template.version>
-        <web-app.version>1.0</web-app.version>
+        <sqltemplate.version>4.0</sqltemplate.version>
+        <web-app.version>4.0</web-app.version>
         <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
         <javax.servlet.jsp-api.version>2.3.3</javax.servlet.jsp-api.version>
         <webapp-runner.version>9.0.27.1</webapp-runner.version>
@@ -58,8 +58,8 @@
             </dependency>
             <dependency>
                 <groupId>ru.rosbank.javaschool</groupId>
-                <artifactId>sql-template</artifactId>
-                <version>${sql-template.version}</version>
+                <artifactId>sqltemplate</artifactId>
+                <version>${sqltemplate.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.projectlombok</groupId>
@@ -73,19 +73,20 @@
     <distributionManagement>
         <repository>
             <id>github</id>
-            <url>https://maven.pkg.github.com/yana-chaputina/Mcdonalds-web</url>
+            <url>https://maven.pkg.github.com/yana-chaputina/mcdonalds-web</url>
         </repository>
     </distributionManagement>
 
     <repositories>
         <repository>
             <id>github</id>
-            <url>https://maven.pkg.github.com/yana-chaputina/Mcdonalds-web</url>
+            <url>https://maven.pkg.github.com/yana-chaputina/mcdonalds-web</url>
         </repository>
     </repositories>
 
     <modules>
-        <module>sql-template</module>
+        <module>sqltemplate</module>
         <module>web-app</module>
     </modules>
+
 </project>
