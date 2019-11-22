@@ -12,7 +12,7 @@ import ru.rosbank.javaschool.web.repository.ProductRepository;
 import java.util.List;
 
 @RequiredArgsConstructor
-public class BurgerUserService {
+public class ProductUserService {
   private final ProductRepository productRepository;
   private final OrderRepository orderRepository;
   private final OrderPositionRepository orderPositionRepository;

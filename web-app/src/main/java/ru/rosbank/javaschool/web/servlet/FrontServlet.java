@@ -4,8 +4,8 @@ import ru.rosbank.javaschool.util.SQLTemplate;
 import ru.rosbank.javaschool.web.constant.Constants;
 import ru.rosbank.javaschool.web.model.ProductModel;
 import ru.rosbank.javaschool.web.repository.*;
-import ru.rosbank.javaschool.web.service.BurgerAdminService;
-import ru.rosbank.javaschool.web.service.BurgerUserService;
+import ru.rosbank.javaschool.web.service.ProductAdminService;
+import ru.rosbank.javaschool.web.service.ProductUserService;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -24,8 +24,8 @@ import java.io.IOException;
 
 // Singleton'ы - Servlet*
 public class FrontServlet extends HttpServlet {
-  private BurgerUserService burgerUserService;
-  private BurgerAdminService burgerAdminService;
+  private ProductUserService burgerUserService;
+  private ProductAdminService productAdminService;
 
   // Ctrl + O
   @Override
@@ -41,8 +41,8 @@ public class FrontServlet extends HttpServlet {
       ProductRepository productRepository = new ProductRepositoryJdbcImpl(dataSource, sqlTemplate);
       OrderRepository orderRepository = new OrderRepositoryJdbcImpl(dataSource, sqlTemplate);
       OrderPositionRepository orderPositionRepository = new OrderPositionRepositoryJdbcImpl(dataSource, sqlTemplate);
-      burgerUserService = new BurgerUserService(productRepository, orderRepository, orderPositionRepository);
-      burgerAdminService = new BurgerAdminService(productRepository, orderRepository, orderPositionRepository);
+      burgerUserService = new ProductUserService(productRepository, orderRepository, orderPositionRepository);
+      productAdminService = new ProductAdminService(productRepository, orderRepository, orderPositionRepository);
 
       insertInitialData(productRepository);
     } catch (NamingException e) {
@@ -51,8 +51,8 @@ public class FrontServlet extends HttpServlet {
   }
 
   private void insertInitialData(ProductRepository productRepository) {
-    productRepository.save(new ProductModel(0, "Burger 1", 100, 1, null));
-    productRepository.save(new ProductModel(0, "Burger 2", 200, 2, null));
+    //productRepository.save(new ProductModel(0, "Burger 1", 100, 1, null));
+    //productRepository.save(new ProductModel(0, "Burger 2", 200, 2, null));
   }
 
   @Override
@@ -67,7 +67,7 @@ public class FrontServlet extends HttpServlet {
       if (url.equals("/admin")) {
         // TODO: work with admin panel
         if (req.getMethod().equals("GET")) {
-          req.setAttribute(Constants.ITEMS, burgerAdminService.getAll());
+          req.setAttribute(Constants.ITEMS, productAdminService.getAll());
           req.getRequestDispatcher("/WEB-INF/admin/frontpage.jsp").forward(req, resp);
           return;
         }
@@ -79,7 +79,7 @@ public class FrontServlet extends HttpServlet {
           int price = Integer.parseInt(req.getParameter("price"));
           int quantity = Integer.parseInt(req.getParameter("quantity"));
           // TODO: validation
-          burgerAdminService.save(new ProductModel(id, name, price, quantity, null));
+         //productAdminService.save(new ProductModel(id, name, price, quantity, null));
           resp.sendRedirect(url);
           return;
         }
@@ -89,8 +89,8 @@ public class FrontServlet extends HttpServlet {
         if (req.getMethod().equals("GET")) {
           // ?id=value
           int id = Integer.parseInt(req.getParameter("id"));
-          req.setAttribute(Constants.ITEM, burgerAdminService.getById(id));
-          req.setAttribute(Constants.ITEMS, burgerAdminService.getAll());
+          req.setAttribute(Constants.ITEM, productAdminService.getById(id));
+          req.setAttribute(Constants.ITEMS, productAdminService.getAll());
           req.getRequestDispatcher("/WEB-INF/admin/frontpage.jsp").forward(req, resp);
           return;
         }
