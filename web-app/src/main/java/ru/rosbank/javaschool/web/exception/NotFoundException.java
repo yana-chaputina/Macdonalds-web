@@ -1,7 +1,8 @@
 package ru.rosbank.javaschool.web.exception;
 
 public class NotFoundException extends RuntimeException {
-  public NotFoundException() {
+
+    public NotFoundException() {
     super();
   }
 

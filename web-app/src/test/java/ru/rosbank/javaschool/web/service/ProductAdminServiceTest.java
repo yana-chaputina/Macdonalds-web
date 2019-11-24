@@ -60,6 +60,7 @@ class ProductAdminServiceTest {
 
     @Test
     void getById() {
+
         ProductRepository productRepoMock=mock(ProductRepository.class);
         OrderPositionRepository orderPositionRepoMock=mock(OrderPositionRepository.class);
         OrderRepository orderRepoMock=mock(OrderRepository.class);
@@ -75,6 +76,7 @@ class ProductAdminServiceTest {
 
     @Test
     void getByIdThrowEx() {
+
         ProductRepository productRepoMock=mock(ProductRepository.class);
         OrderPositionRepository orderPositionRepoMock=mock(OrderPositionRepository.class);
         OrderRepository orderRepoMock=mock(OrderRepository.class);
@@ -87,6 +89,7 @@ class ProductAdminServiceTest {
 
     @Test
     void removeProductById() {
+
         ProductRepository productRepoMock=mock(ProductRepository.class);
         OrderPositionRepository orderPositionRepoMock=mock(OrderPositionRepository.class);
         OrderRepository orderRepoMock=mock(OrderRepository.class);

@@ -5,7 +5,6 @@ import ru.rosbank.javaschool.util.RowMapper;
 import ru.rosbank.javaschool.util.SQLTemplate;
 import ru.rosbank.javaschool.web.exception.DataAccessException;
 import ru.rosbank.javaschool.web.model.OrderPositionModel;
-import ru.rosbank.javaschool.web.model.ProductModel;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;

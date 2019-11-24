@@ -1,5 +1,5 @@
-out
-target
+/out/
+/target/
 !.mvn/wrapper/maven-wrapper.jar
 
 ### STS ###
@@ -16,7 +16,6 @@ target
 *.iws
 *.iml
 *.ipr
-*tar.gz
 
 ### NetBeans ###
 /nbproject/private/
@@ -25,8 +24,3 @@ target
 /dist/
 /nbdist/
 /.nb-gradle/
-
-### OS Specific ###
-.DS_Store*
-Thumbs.db*
-apache-tomcat*

@@ -3,10 +3,8 @@ package ru.rosbank.javaschool.web.servlet;
 import ru.rosbank.javaschool.util.SQLTemplate;
 import ru.rosbank.javaschool.web.constant.Constants;
 import ru.rosbank.javaschool.web.dto.ProductDetailsDto;
-import ru.rosbank.javaschool.web.model.ProductModel;
 import ru.rosbank.javaschool.web.repository.*;
 import ru.rosbank.javaschool.web.service.ProductAdminService;
-import ru.rosbank.javaschool.web.service.ProductUserService;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -42,12 +40,12 @@ public class AdminServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-    String url = req.getRequestURI().substring(req.getContextPath().length());
+        String url = req.getRequestURI().substring(req.getContextPath().length());
 
         if (url.equals("/fastfood/admin")) {
             req.setAttribute(Constants.ITEMS, productAdminService.getAll());
-          req.getRequestDispatcher("/WEB-INF/admin/frontpage.jsp").forward(req, resp);
-          return;
+            req.getRequestDispatcher("/WEB-INF/admin/frontpage.jsp").forward(req, resp);
+            return;
         }
 
     }
@@ -57,22 +55,22 @@ public class AdminServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String url = req.getRequestURI().substring(req.getContextPath().length());
 
-        String action=req.getParameter("action");
+        String action = req.getParameter(Constants.ACTION);
 
-        if(action.equals("save")) {
-            int id = Integer.parseInt(req.getParameter("id"));
-          String name = req.getParameter("name");
-          int price = Integer.parseInt(req.getParameter("price"));
-          String category=req.getParameter("category");
-          String desc=req.getParameter("description");
-          String imageURL=req.getParameter("image");
-          productAdminService.save(new ProductDetailsDto(id, name, price, category,desc,imageURL));
-          resp.sendRedirect(url);
-          return;
+        if (action.equals(Constants.SAVE)) {
+            int id = Integer.parseInt(req.getParameter(Constants.ID));
+            String name = req.getParameter(Constants.NAME);
+            int price = Integer.parseInt(req.getParameter(Constants.PRICE));
+            String category = req.getParameter(Constants.CATEGORY);
+            String desc = req.getParameter(Constants.DESCRIPTION);
+            String imageURL = req.getParameter(Constants.IMAGE);
+            productAdminService.save(new ProductDetailsDto(id, name, price, category, desc, imageURL));
+            resp.sendRedirect(url);
+            return;
         }
 
-        if (action.equals("edit")) {
-            int id = Integer.parseInt(req.getParameter("id"));
+        if (action.equals(Constants.EDIT)) {
+            int id = Integer.parseInt(req.getParameter(Constants.ID));
             req.setAttribute(Constants.ITEM, productAdminService.getById(id));
             req.setAttribute(Constants.ITEMS, productAdminService.getAll());
             req.getRequestDispatcher("/WEB-INF/admin/frontpage.jsp").forward(req, resp);

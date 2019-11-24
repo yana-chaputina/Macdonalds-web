@@ -25,6 +25,7 @@ class ProductUserServiceTest {
 
     @Test
     void getAll() {
+
         ProductRepository productRepoMock=mock(ProductRepository.class);
         OrderPositionRepository orderPositionRepoMock=mock(OrderPositionRepository.class);
         OrderRepository orderRepoMock=mock(OrderRepository.class);
@@ -44,6 +45,7 @@ class ProductUserServiceTest {
 
     @Test
     void getById() {
+
         ProductRepository productRepoMock=mock(ProductRepository.class);
         OrderPositionRepository orderPositionRepoMock=mock(OrderPositionRepository.class);
         OrderRepository orderRepoMock=mock(OrderRepository.class);
@@ -59,6 +61,7 @@ class ProductUserServiceTest {
 
     @Test
     void getByIdThrowEx() {
+
         ProductRepository productRepoMock=mock(ProductRepository.class);
         OrderPositionRepository orderPositionRepoMock=mock(OrderPositionRepository.class);
         OrderRepository orderRepoMock=mock(OrderRepository.class);
@@ -71,11 +74,13 @@ class ProductUserServiceTest {
 
     @Test
     void createOrder() {
+
         ProductRepository productRepoMock=mock(ProductRepository.class);
         OrderPositionRepository orderPositionRepoMock=mock(OrderPositionRepository.class);
         OrderRepository orderRepoMock=mock(OrderRepository.class);
         ProductUserService productUserService=new ProductUserService(productRepoMock,orderRepoMock,orderPositionRepoMock);
         OrderModel model = new OrderModel(0);
+
         when(orderRepoMock.save(model)).thenReturn(model);
 
         int actual=productUserService.createOrder();
@@ -92,6 +97,7 @@ class ProductUserServiceTest {
         OrderPositionModel orderPositionModel=new OrderPositionModel(1,1,1,"burger",100,10);
         List<OrderPositionModel> listOrdPosModel=new ArrayList<>();
         listOrdPosModel.add(orderPositionModel);
+
         when(orderPositionRepoMock.getAllByOrderId(1)).thenReturn(listOrdPosModel);
 
         OrderPositionModel expected=new OrderPositionModel(1,1,1,"burger",100,20);
@@ -103,6 +109,7 @@ class ProductUserServiceTest {
 
     @Test
     void orderSaveNewOrderPositionModel() {
+
         ProductRepository productRepoMock=mock(ProductRepository.class);
         OrderPositionRepository orderPositionRepoMock=mock(OrderPositionRepository.class);
         OrderRepository orderRepoMock=mock(OrderRepository.class);
@@ -121,12 +128,14 @@ class ProductUserServiceTest {
 
     @Test
     void orderThrowEx() {
+
         ProductRepository productRepoMock=mock(ProductRepository.class);
         OrderPositionRepository orderPositionRepoMock=mock(OrderPositionRepository.class);
         OrderRepository orderRepoMock=mock(OrderRepository.class);
         ProductUserService productUserService=new ProductUserService(productRepoMock,orderRepoMock,orderPositionRepoMock);
 
         when(orderPositionRepoMock.getAllByOrderId(1)).thenReturn(Collections.emptyList());
+
         when(productRepoMock.getById(1)).thenReturn(Optional.empty());
 
         assertThrows(NotFoundException.class,()->productUserService.order(1,1,10));
@@ -152,6 +161,7 @@ class ProductUserServiceTest {
 
     @Test
     void updateOrderPositionModel() {
+
         ProductRepository productRepoMock=mock(ProductRepository.class);
         OrderPositionRepository orderPositionRepoMock=mock(OrderPositionRepository.class);
         OrderRepository orderRepoMock=mock(OrderRepository.class);
@@ -159,6 +169,7 @@ class ProductUserServiceTest {
         OrderPositionModel orderPositionModel=new OrderPositionModel(1,1,1,"burger",100,10);
         List<OrderPositionModel> listOrdPosModel=new ArrayList<>();
         listOrdPosModel.add(orderPositionModel);
+
         when(orderPositionRepoMock.getAllByOrderId(1)).thenReturn(listOrdPosModel);
 
         OrderPositionModel expected=new OrderPositionModel(1,1,1,"burger",100,10);

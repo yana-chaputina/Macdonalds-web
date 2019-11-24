@@ -16,6 +16,7 @@
 *.iws
 *.iml
 *.ipr
+*tar.gz
 
 ### NetBeans ###
 /nbproject/private/
@@ -28,3 +29,4 @@
 ### OS Specific ###
 .DS_Store*
 Thumbs.db*
+apache-tomcat*

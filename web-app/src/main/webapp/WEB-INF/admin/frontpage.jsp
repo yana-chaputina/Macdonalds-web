@@ -4,7 +4,7 @@
 <%@ page import="ru.rosbank.javaschool.web.dto.ProductDetailsDto" %>
 <%@ page import="ru.rosbank.javaschool.web.dto.ProductDto" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%-- ! + Tab - emmet --%>
+
 <!doctype html>
 <html lang="en">
 <head>

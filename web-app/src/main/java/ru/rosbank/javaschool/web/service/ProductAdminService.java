@@ -9,7 +9,6 @@ import ru.rosbank.javaschool.web.repository.OrderPositionRepository;
 import ru.rosbank.javaschool.web.repository.OrderRepository;
 import ru.rosbank.javaschool.web.repository.ProductRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

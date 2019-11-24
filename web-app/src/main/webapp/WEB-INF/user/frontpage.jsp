@@ -3,7 +3,7 @@
 <%@ page import="ru.rosbank.javaschool.web.model.OrderPositionModel" %>
 <%@ page import="ru.rosbank.javaschool.web.dto.ProductDto" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%-- ! + Tab - emmet --%>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -38,9 +38,6 @@
                     </div>
                     <button class="btn btn-primary">Add to card</button>
                   </form>
-                  <form action="<%= request.getContextPath() %>/fastfood/details?id=<%= item.getId() %>" method="get">
-                  <button class="btn btn-primary">Details</button>
-                  </form>
                 </div>
               </div>
             </div>
@@ -49,7 +46,7 @@
         </div>
         <div class="col-sm-3">
           <h5>Cart:</h5>
-              <% List<OrderPositionModel> positions = (List<OrderPositionModel>) request.getAttribute("ordered-items"); %>
+          <% List<OrderPositionModel> positions = (List<OrderPositionModel>) request.getAttribute(Constants.ORDERED_ITEMS); %>
               <% for (OrderPositionModel model: positions) { %>
           <ul class="list-group">
             <li class="list-group-item"><%= model.getProductName()+" Price: "+model.getProductPrice()%>
