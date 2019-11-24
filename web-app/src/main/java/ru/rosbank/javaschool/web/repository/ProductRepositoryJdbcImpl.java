@@ -3,7 +3,6 @@ package ru.rosbank.javaschool.web.repository;
 
 import ru.rosbank.javaschool.util.SQLTemplate;
 import ru.rosbank.javaschool.util.RowMapper;
-import ru.rosbank.javaschool.web.dto.ProductDetailsDto;
 import ru.rosbank.javaschool.web.exception.DataAccessException;
 import ru.rosbank.javaschool.web.model.ProductModel;
 
@@ -31,9 +30,11 @@ public class ProductRepositoryJdbcImpl implements ProductRepository {
         try {
             template.update(ds, "CREATE TABLE IF NOT EXISTS products (\n" +
                     "id INTEGER PRIMARY KEY AUTOINCREMENT,\n" +
-                    "name TEXT NOT NULL, price INTEGER NOT NULL CHECK (price >= 0),\n" +
+                    "name TEXT NOT NULL,\n" +
+                    "price INTEGER NOT NULL CHECK (price >= 0),\n" +
                     "category TEXT NOT NULL,\n" +
-                    "description TEXT NOT NULL,image_url TEXT\n" +
+                    "description TEXT NOT NULL,\n" +
+                    "image_url TEXT\n" +
                     ");");
         } catch (SQLException e) {
             throw new DataAccessException(e);
@@ -66,7 +67,7 @@ public class ProductRepositoryJdbcImpl implements ProductRepository {
         try {
 
             if (model.getId() == 0) {
-                int id = template.<Integer>updateForId(ds, "INSERT INTO products(name, price, category,description, image_url) VALUES (?, ?, ?, ?);", stmt -> {
+                int id = template.<Integer>updateForId(ds, "INSERT INTO products(name, price, category,description, image_url) VALUES (?, ?, ?, ?,?);", stmt -> {
                     int nextIndex = 1;
                     stmt.setString(nextIndex++, model.getName());
                     stmt.setInt(nextIndex++, model.getPrice());
@@ -89,10 +90,10 @@ public class ProductRepositoryJdbcImpl implements ProductRepository {
                 stmt.setInt(nextIndex++, model.getId());
                 return stmt;
             });
+            return model;
         } catch (SQLException e) {
             throw new DataAccessException(e);
         }
-        return model;
     }
 
     @Override
@@ -102,9 +103,9 @@ public class ProductRepositoryJdbcImpl implements ProductRepository {
                 stmt.setInt(1, id);
                 return stmt;
             });
+            return true;
         } catch (SQLException e) {
             throw new DataAccessException(e);
         }
-        return true;
     }
 }

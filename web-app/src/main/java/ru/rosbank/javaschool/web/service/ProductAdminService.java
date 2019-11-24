@@ -19,8 +19,8 @@ public class ProductAdminService {
     private final OrderRepository orderRepository;
     private final OrderPositionRepository orderPositionRepository;
 
-    public void save(ProductDetailsDto dto) {
-        productRepository.save(ProductModel.from(dto));
+    public ProductDetailsDto save(ProductDetailsDto dto) {
+        return ProductDetailsDto.from(productRepository.save(ProductModel.from(dto)));
     }
 
     public List<ProductDto> getAll() {
@@ -35,5 +35,10 @@ public class ProductAdminService {
                 .map(o->ProductDetailsDto.from(o))
                 .orElseThrow(NotFoundException::new)
                 ;
+    }
+
+    public boolean removeProductById(int id)
+    {
+        return productRepository.removeById(id);
     }
 }

@@ -6,7 +6,7 @@
 
     <groupId>ru.rosbank.javaschool</groupId>
     <artifactId>multimodule</artifactId>
-    <version>4.0</version>
+    <version>4.1</version>
     <packaging>pom</packaging>
 
     <properties>
@@ -23,10 +23,6 @@
         <sqlite-jdbc.version>3.28.0</sqlite-jdbc.version>
     </properties>
 
-    <!--  dependencyManagement  -->
-    <!--  в родительском POM'е прописываются версии всех зависимостей, используемых в проекте  -->
-    <!--  тогда в дочерних не нужно будет их указывать  -->
-    <!--  dependencyManagement не добавляет зависимостей, а только определяет  -->
     <dependencyManagement>
         <dependencies>
             <dependency>

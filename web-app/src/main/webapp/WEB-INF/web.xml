@@ -9,12 +9,32 @@
         <load-on-startup>1</load-on-startup>
     </servlet>
 
-    <!-- mapping - привязка обработчика к определённому URL-->
+    <servlet>
+        <servlet-name>admin-front</servlet-name>
+        <servlet-class>ru.rosbank.javaschool.web.servlet.AdminServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+
     <servlet-mapping>
         <servlet-name>front</servlet-name>
-        <url-pattern>/</url-pattern>
+        <url-pattern>/fastfood</url-pattern>
     </servlet-mapping>
 
+    <servlet-mapping>
+        <servlet-name>front</servlet-name>
+        <url-pattern>/fastfood/details*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>front</servlet-name>
+        <url-pattern></url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>admin-front</servlet-name>
+        <url-pattern>/fastfood/admin</url-pattern>
+    </servlet-mapping>
 
     <error-page>
         <exception-type>java.lang.Exception</exception-type>

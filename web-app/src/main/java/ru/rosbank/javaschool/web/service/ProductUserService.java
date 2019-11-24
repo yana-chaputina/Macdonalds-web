@@ -1,6 +1,8 @@
 package ru.rosbank.javaschool.web.service;
 
 import lombok.RequiredArgsConstructor;
+import ru.rosbank.javaschool.web.dto.ProductDetailsDto;
+import ru.rosbank.javaschool.web.dto.ProductDto;
 import ru.rosbank.javaschool.web.exception.NotFoundException;
 import ru.rosbank.javaschool.web.model.OrderModel;
 import ru.rosbank.javaschool.web.model.OrderPositionModel;
@@ -10,6 +12,7 @@ import ru.rosbank.javaschool.web.repository.OrderRepository;
 import ru.rosbank.javaschool.web.repository.ProductRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 public class ProductUserService {
@@ -17,22 +20,40 @@ public class ProductUserService {
   private final OrderRepository orderRepository;
   private final OrderPositionRepository orderPositionRepository;
 
-  public List<ProductModel> getAll() {
-    return productRepository.getAll();
+  public List<ProductDto> getAll() {
+    return productRepository.getAll().stream()
+            .map(ProductDto::from)
+            .collect(Collectors.toList())
+            ;
   }
 
-  public ProductModel getById(int id) {
-    return productRepository.getById(id).orElseThrow(NotFoundException::new);
+  public ProductDetailsDto getById(int id) {
+    return productRepository.getById(id)
+            .map(o->ProductDetailsDto.from(o))
+            .orElseThrow(NotFoundException::new)
+            ;
   }
 
-  // TODO: выяснить время работы сессии в Tomcat
   public int createOrder() {
     OrderModel model = new OrderModel(0);
     orderRepository.save(model);
     return model.getId();
   }
 
-  public void order(int orderId, int id, int quantity) {
+  public OrderPositionModel order(int orderId, int id, int quantity) {
+    OrderPositionModel forUpdate=null;
+
+    for (OrderPositionModel orderPositionModel : orderPositionRepository.getAllByOrderId(orderId))
+    {
+      if(orderPositionModel.getProductId()==id) {
+        orderPositionModel.setProductQuantity(orderPositionModel.getProductQuantity()+quantity);
+        forUpdate=orderPositionModel;
+      }
+    }
+    if(forUpdate!=null) {
+      return orderPositionRepository.save(forUpdate);
+    }
+
     ProductModel productModel = productRepository.getById(id).orElseThrow(NotFoundException::new);
     OrderPositionModel orderPositionModel = new OrderPositionModel(
         0,
@@ -42,10 +63,32 @@ public class ProductUserService {
         productModel.getPrice(),
         quantity
     );
-    orderPositionRepository.save(orderPositionModel);
+    return orderPositionRepository.save(orderPositionModel);
   }
 
   public List<OrderPositionModel> getAllOrderPosition(int orderId) {
       return orderPositionRepository.getAllByOrderId(orderId);
+  }
+
+  public OrderPositionModel updateOrderPositionModel(int orderId,int id,int quantity)
+  {
+    OrderPositionModel forUpdate=null;
+
+    for (OrderPositionModel orderPositionModel : orderPositionRepository.getAllByOrderId(orderId))
+    {
+      if(orderPositionModel.getProductId()==id) {
+        orderPositionModel.setProductQuantity(quantity);
+        forUpdate=orderPositionModel;
+      }
+    }
+    if(forUpdate!=null) {
+      return orderPositionRepository.save(forUpdate);
+    }
+    throw new NotFoundException();
+  }
+
+  public boolean removeOrderById(int id) {
+
+      return orderPositionRepository.removeById(id);
   }
 }

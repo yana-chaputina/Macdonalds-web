@@ -53,12 +53,12 @@ public class OrderRepositoryJdbcImpl implements OrderRepository {
     }
 
     @Override
-    public void save(OrderModel model) {
+    public OrderModel save(OrderModel model) {
         try {
             if (model.getId() == 0) {
                 int id = template.<Integer>updateForId(ds, "INSERT INTO orders DEFAULT VALUES;");
                 model.setId(id);
-                return;
+                return model;
             }
             throw new DataAccessException("Can't update model");
         } catch (SQLException e) {
@@ -67,12 +67,13 @@ public class OrderRepositoryJdbcImpl implements OrderRepository {
     }
 
     @Override
-    public void removeById(int id) {
+    public boolean removeById(int id) {
         try {
             template.update(ds, "DELETE FROM orders WHERE id = ?;", stmt -> {
                 stmt.setInt(1, id);
                 return stmt;
             });
+            return true;
         } catch (SQLException e) {
             throw new DataAccessException(e);
         }

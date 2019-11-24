@@ -64,7 +64,7 @@ public class OrderPositionRepositoryJdbcImpl implements OrderPositionRepository 
     }
 
     @Override
-    public void save(OrderPositionModel model) {
+    public OrderPositionModel save(OrderPositionModel model) {
         try {
             if (model.getId() == 0) {
                 int id = template.<Integer>updateForId(ds, "INSERT INTO orders_positions(order_id, product_id, product_name, product_price, product_quantity) VALUES (?, ?, ?, ?, ?);", stmt -> {
@@ -77,29 +77,32 @@ public class OrderPositionRepositoryJdbcImpl implements OrderPositionRepository 
                     return stmt;
                 });
                 model.setId(id);
-            } else {
-                template.update(ds, "UPDATE orders_positions SET order_id = ? product_id = ?, product_name = ?, product_price = ?, product_quantity = ? WHERE id = ?;", stmt -> {
-                    int nextIndex = 1;
-                    stmt.setInt(nextIndex++, model.getOrderId());
-                    stmt.setInt(nextIndex++, model.getProductId());
-                    stmt.setString(nextIndex++, model.getProductName());
-                    stmt.setInt(nextIndex++, model.getProductPrice());
-                    stmt.setInt(nextIndex++, model.getProductQuantity());
-                    return stmt;
-                });
+                return model;
             }
+            template.update(ds, "UPDATE orders_positions SET order_id = ?, product_id = ?, product_name = ?, product_price = ?, product_quantity = ? WHERE id = ?;", stmt -> {
+                int nextIndex = 1;
+                stmt.setInt(nextIndex++, model.getOrderId());
+                stmt.setInt(nextIndex++, model.getProductId());
+                stmt.setString(nextIndex++, model.getProductName());
+                stmt.setInt(nextIndex++, model.getProductPrice());
+                stmt.setInt(nextIndex++, model.getProductQuantity());
+                stmt.setInt(nextIndex++, model.getId());
+                return stmt;
+            });
+            return model;
         } catch (SQLException e) {
             throw new DataAccessException(e);
         }
     }
 
     @Override
-    public void removeById(int id) {
+    public boolean removeById(int id) {
         try {
             template.update(ds, "DELETE FROM orders_positions WHERE id = ?;", stmt -> {
                 stmt.setInt(1, id);
                 return stmt;
             });
+            return true;
         } catch (SQLException e) {
             throw new DataAccessException(e);
         }

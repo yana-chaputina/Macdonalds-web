@@ -10,7 +10,7 @@ public interface OrderRepository {
 
     Optional<OrderModel> getById(int id);
 
-    void save(OrderModel model);
+    OrderModel save(OrderModel model);
 
-    void removeById(int id);
+    boolean removeById(int id);
 }

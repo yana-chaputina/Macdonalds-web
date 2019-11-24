@@ -10,9 +10,9 @@ public interface OrderPositionRepository {
 
     Optional<OrderPositionModel> getById(int id);
 
-    void save(OrderPositionModel model);
+    OrderPositionModel save(OrderPositionModel model);
 
-    void removeById(int id);
+    boolean removeById(int id);
 
   List<OrderPositionModel> getAllByOrderId(int orderId);
 }
