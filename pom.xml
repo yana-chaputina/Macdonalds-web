@@ -6,15 +6,15 @@
 
     <groupId>ru.rosbank.javaschool</groupId>
     <artifactId>multimodule</artifactId>
-    <version>4.3</version>
+    <version>4.4</version>
     <packaging>pom</packaging>
 
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <sqltemplate.version>4.0</sqltemplate.version>
-        <web-app.version>4.0</web-app.version>
+        <sqltemplate.version>4.4</sqltemplate.version>
+        <web-app.version>4.4</web-app.version>
         <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
         <javax.servlet.jsp-api.version>2.3.3</javax.servlet.jsp-api.version>
         <webapp-runner.version>9.0.27.1</webapp-runner.version>
